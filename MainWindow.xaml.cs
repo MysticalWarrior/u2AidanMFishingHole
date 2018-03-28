@@ -43,6 +43,8 @@ namespace u2AidanMFishingHole
             int pickerelPoints;
             int totalPoints;
             int counter = 0;
+            int remainderPoints = 0;
+            int remainderPoints2 = 0;
 
             ///begin tryparsing point values, then deleting them from original string.
             int.TryParse(input.Substring(0, input.IndexOf('\r')), out troutPoints);
@@ -58,29 +60,93 @@ namespace u2AidanMFishingHole
             ///tryparse total point values
             int.TryParse(input.Substring(0, input.IndexOf('\r')), out totalPoints);
 
+            int fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+
             //Loop to find until fish is not equal & less than total points
-            while (troutFish * troutPoints != totalPoints & troutFish * troutPoints < totalPoints)
+            while (fishPoints < totalPoints)
+            {
+                remainderPoints = totalPoints - troutFish * troutPoints;
+                while (pikeFish * pikePoints < remainderPoints)
+                {
+                    remainderPoints2 = remainderPoints - pikePoints;
+                    while (pickerelPoints * pickerelFish < remainderPoints2)
+                    {
+                        pickerelFish++;
+                        createLabel(troutFish, pikeFish, pickerelFish);
+                        counter++;
+                    }
+                    pikeFish++;
+                    counter++;
+                    createLabel(troutFish, pikeFish, pickerelFish);
+                }
+                troutFish++;
+                createLabel(troutFish, pikeFish, pickerelFish);
+                counter++;
+                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+            }
+            pikeFish = 0;
+            pickerelFish = 0;
+            
+            while (fishPoints > totalPoints)
             {
                 troutFish++;
-                //MessageBox.Show("trout: " + troutFish);
-                createLabel(troutFish, 0, 0);
-                counter++;
-            }
-            while (pikeFish * pikePoints != totalPoints & pikeFish * pikePoints < totalPoints)
-            {
-                pikeFish++;
-                //MessageBox.Show("pike: " + pikeFish);
-                createLabel(0, pikeFish, 0);
-                counter++;
-            }
-            while (pickerelFish * pickerelPoints != totalPoints & pickerelFish * pickerelPoints < totalPoints)
-            {
-                pickerelFish++;
-                //MessageBox.Show("pickerel: " + pickerelFish);
-                createLabel(0, 0, pickerelFish);
-                counter++;
+                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                createLabel(troutFish, pikeFish, pickerelFish);
+                if (fishPoints > totalPoints)
+                {
+                    pikeFish++;
+                    fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                    createLabel(troutFish, pikeFish, pickerelFish);
+                    if (fishPoints > totalPoints)
+                    {
+                        pickerelFish++;
+                        fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                        createLabel(troutFish, pikeFish, pickerelFish);
+                    }
+                }
             }
 
+
+            while (fishPoints > totalPoints)
+            {
+                pikeFish++;
+                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                createLabel(troutFish, pikeFish, pickerelFish);
+                if (fishPoints > totalPoints)
+                {
+                    troutFish++;
+                    fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                    createLabel(troutFish, pikeFish, pickerelFish);
+                    if (fishPoints > totalPoints)
+                    {
+                        pickerelFish++;
+                        fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                        createLabel(troutFish, pikeFish, pickerelFish);
+                    }
+                }
+            }
+
+
+            while (fishPoints > totalPoints)
+            {
+                pickerelFish++;
+                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                createLabel(troutFish, pikeFish, pickerelFish);
+                if (fishPoints > totalPoints)
+                {
+                    troutFish++;
+                    fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                    createLabel(troutFish, pikeFish, pickerelFish);
+                    if (fishPoints > totalPoints)
+                    {
+                        pikeFish++;
+                        fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                        createLabel(troutFish, pikeFish, pickerelFish);
+                    }
+                }
+            }
+            
+            //Output a label that shows counter
             Label myLabel2 = new Label();
             myLabel2.Content = "Total number of options: " + counter;
             myStackPanel.Children.Add(myLabel2);
