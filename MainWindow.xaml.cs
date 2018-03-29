@@ -65,9 +65,11 @@ namespace u2AidanMFishingHole
             //Loop to find until fish is not equal & less than total points
             while (fishPoints < totalPoints)
             {
+                troutFish++;
                 remainderPoints = totalPoints - troutFish * troutPoints;
                 while (pikeFish * pikePoints < remainderPoints)
                 {
+                    pikeFish++;
                     remainderPoints2 = remainderPoints - pikePoints;
                     while (pickerelPoints * pickerelFish < remainderPoints2)
                     {
@@ -75,77 +77,43 @@ namespace u2AidanMFishingHole
                         createLabel(troutFish, pikeFish, pickerelFish);
                         counter++;
                     }
-                    pikeFish++;
                     counter++;
                     createLabel(troutFish, pikeFish, pickerelFish);
+                    pickerelFish = 0;
                 }
-                troutFish++;
                 createLabel(troutFish, pikeFish, pickerelFish);
                 counter++;
                 fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                pikeFish = 0;
             }
+            //reset
+            troutFish = 0;
             pikeFish = 0;
             pickerelFish = 0;
-            
-            while (fishPoints > totalPoints)
-            {
-                troutFish++;
-                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                createLabel(troutFish, pikeFish, pickerelFish);
-                if (fishPoints > totalPoints)
-                {
-                    pikeFish++;
-                    fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                    createLabel(troutFish, pikeFish, pickerelFish);
-                    if (fishPoints > totalPoints)
-                    {
-                        pickerelFish++;
-                        fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                        createLabel(troutFish, pikeFish, pickerelFish);
-                    }
-                }
-            }
 
-
-            while (fishPoints > totalPoints)
+            while(fishPoints < totalPoints)
             {
                 pikeFish++;
-                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                createLabel(troutFish, pikeFish, pickerelFish);
-                if (fishPoints > totalPoints)
+                remainderPoints = totalPoints - pikeFish * pikePoints;
+                while(pickerelFish * pickerelPoints < remainderPoints)
                 {
-                    troutFish++;
-                    fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                    pickerelFish++;
                     createLabel(troutFish, pikeFish, pickerelFish);
-                    if (fishPoints > totalPoints)
-                    {
-                        pickerelFish++;
-                        fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                        createLabel(troutFish, pikeFish, pickerelFish);
-                    }
+                    counter++;
                 }
+                createLabel(troutFish, pikeFish, pickerelFish);
+                counter++;
+                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
+                pickerelFish = 0;
             }
 
-
-            while (fishPoints > totalPoints)
+            while(pickerelFish * pickerelPoints < totalPoints)
             {
                 pickerelFish++;
-                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
                 createLabel(troutFish, pikeFish, pickerelFish);
-                if (fishPoints > totalPoints)
-                {
-                    troutFish++;
-                    fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                    createLabel(troutFish, pikeFish, pickerelFish);
-                    if (fishPoints > totalPoints)
-                    {
-                        pikeFish++;
-                        fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                        createLabel(troutFish, pikeFish, pickerelFish);
-                    }
-                }
+                counter++;
             }
-            
+
             //Output a label that shows counter
             Label myLabel2 = new Label();
             myLabel2.Content = "Total number of options: " + counter;
