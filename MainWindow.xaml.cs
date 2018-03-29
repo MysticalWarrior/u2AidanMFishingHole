@@ -63,55 +63,52 @@ namespace u2AidanMFishingHole
             int fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
 
             //Loop to find until fish is not equal & less than total points
-            while (fishPoints < totalPoints)
+
+            while (pickerelFish * pickerelPoints < totalPoints)
+            {
+                pickerelFish++;
+                checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
+                counter++;
+            }
+
+            pickerelFish = 0;
+
+            while (pikeFish * pikePoints < totalPoints)
+            {
+                pikeFish++;
+                checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
+                counter++;
+                remainderPoints = totalPoints - pikeFish * pikePoints;
+                while (pickerelFish * pickerelPoints < totalPoints)
+                {
+                    pickerelFish++;
+                    checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
+                    counter++;
+                }
+            }
+
+            pikeFish = 0;
+            pickerelFish = 0;
+
+            while (troutFish * troutPoints < totalPoints)
             {
                 troutFish++;
+                checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
+                counter++;
                 remainderPoints = totalPoints - troutFish * troutPoints;
                 while (pikeFish * pikePoints < remainderPoints)
                 {
                     pikeFish++;
-                    remainderPoints2 = remainderPoints - pikePoints;
-                    while (pickerelPoints * pickerelFish < remainderPoints2)
+                    checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
+                    counter++;
+                    remainderPoints2 = remainderPoints - pikeFish * pikePoints;
+                    while (pickerelFish * pickerelPoints < remainderPoints2)
                     {
                         pickerelFish++;
-                        createLabel(troutFish, pikeFish, pickerelFish);
+                        checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
                         counter++;
                     }
-                    counter++;
-                    createLabel(troutFish, pikeFish, pickerelFish);
-                    pickerelFish = 0;
                 }
-                createLabel(troutFish, pikeFish, pickerelFish);
-                counter++;
-                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                pikeFish = 0;
-            }
-            //reset
-            troutFish = 0;
-            pikeFish = 0;
-            pickerelFish = 0;
-
-            while(fishPoints < totalPoints)
-            {
-                pikeFish++;
-                remainderPoints = totalPoints - pikeFish * pikePoints;
-                while(pickerelFish * pickerelPoints < remainderPoints)
-                {
-                    pickerelFish++;
-                    createLabel(troutFish, pikeFish, pickerelFish);
-                    counter++;
-                }
-                createLabel(troutFish, pikeFish, pickerelFish);
-                counter++;
-                fishPoints = troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints;
-                pickerelFish = 0;
-            }
-
-            while(pickerelFish * pickerelPoints < totalPoints)
-            {
-                pickerelFish++;
-                createLabel(troutFish, pikeFish, pickerelFish);
-                counter++;
             }
 
             //Output a label that shows counter
@@ -120,11 +117,24 @@ namespace u2AidanMFishingHole
             myStackPanel.Children.Add(myLabel2);
         }
 
+        private void checkLine(int troutFish, int pikeFish, int pickerelFish, int troutPoints, int pikePoints, int pickerelPoints, int totalPoints)
+        {
+            if (troutFish * troutPoints + pikeFish * pikePoints + pickerelFish * pickerelPoints > totalPoints)
+            {
+                Console.WriteLine("false line");
+            }
+            else
+            {
+                createLabel(troutFish, pikeFish, pickerelFish);
+            }
+        }
+
         private void createLabel(int f1, int f2, int f3)
         {
             Label mylabel = new Label();
             mylabel.Content = "Trout: " + f1 + " Pike: " + f2 + " Pickerel: " + f3 + ".";
             myStackPanel.Children.Add(mylabel);
+            Console.WriteLine(mylabel.Content);
         }
     }
 }
