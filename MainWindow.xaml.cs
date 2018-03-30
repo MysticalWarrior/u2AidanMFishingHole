@@ -26,10 +26,13 @@ namespace u2AidanMFishingHole
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        int counter = 0;
 
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
@@ -42,7 +45,6 @@ namespace u2AidanMFishingHole
             int pikePoints;
             int pickerelPoints;
             int totalPoints;
-            int counter = 0;
             int remainderPoints = 0;
             int remainderPoints2 = 0;
 
@@ -68,25 +70,21 @@ namespace u2AidanMFishingHole
             {
                 pickerelFish++;
                 checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
-                counter++;
             }
-
             pickerelFish = 0;
 
             while (pikeFish * pikePoints < totalPoints)
             {
                 pikeFish++;
                 checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
-                counter++;
                 remainderPoints = totalPoints - pikeFish * pikePoints;
                 while (pickerelFish * pickerelPoints < totalPoints)
                 {
                     pickerelFish++;
                     checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
-                    counter++;
                 }
+                pickerelFish = 0;
             }
-
             pikeFish = 0;
             pickerelFish = 0;
 
@@ -94,21 +92,20 @@ namespace u2AidanMFishingHole
             {
                 troutFish++;
                 checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
-                counter++;
                 remainderPoints = totalPoints - troutFish * troutPoints;
                 while (pikeFish * pikePoints < remainderPoints)
                 {
-                    pikeFish++;
-                    checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
-                    counter++;
                     remainderPoints2 = remainderPoints - pikeFish * pikePoints;
                     while (pickerelFish * pickerelPoints < remainderPoints2)
                     {
                         pickerelFish++;
                         checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
-                        counter++;
                     }
+                    pickerelFish = 0;
+                    pikeFish++;
+                    checkLine(troutFish, pikeFish, pickerelFish, troutPoints, pikePoints, pickerelPoints, totalPoints);
                 }
+                pikeFish = 0;
             }
 
             //Output a label that shows counter
@@ -135,6 +132,7 @@ namespace u2AidanMFishingHole
             mylabel.Content = "Trout: " + f1 + " Pike: " + f2 + " Pickerel: " + f3 + ".";
             myStackPanel.Children.Add(mylabel);
             Console.WriteLine(mylabel.Content);
+            counter++;
         }
     }
 }
