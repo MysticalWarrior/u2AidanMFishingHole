@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:u2AidanMFishingHole"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Fishing limiter 9001" Height="350" Width="525">
     <ScrollViewer>
     <StackPanel x:Name="myStackPanel">
         <Label x:Name="greeting" Content="Remeber to press enter after the last line."/>
